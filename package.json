@@ -1,0 +1,17 @@
+{
+  "name": "afkbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jdmagic",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.3.0",
+    "dotenv-safe": "^8.2.0",
+    "mineflayer": "^4.4.0",
+    "prismarine-viewer": "^1.23.0"
+  }
+}
