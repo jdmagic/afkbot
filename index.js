@@ -11,6 +11,7 @@ const discordbot = new Client({
 const mineflayer = require("mineflayer");
 const mineflayerViewer = require("prismarine-viewer").mineflayer;
 require('dotenv-safe').config();
+console.time("timeSinceStart")
 
 var api = "";
 var botid = "";
@@ -51,10 +52,6 @@ mcbot.once("login", () => {
     console.log(e);
   }
   setTimeout(() => {
-    // var scoreboarddata = (mcbot.scoreboard.sidebar.items);
-    // console.log(scoreboarddata);
-    // var result= (scoreboarddata.find(item => item.value === 6));
-    // console.log(result.displayName);
     mcbot.chat("/api new");
     mcbot.setQuickBarSlot("0");
     setTimeout(() => {
@@ -76,10 +73,7 @@ mcbot.on("messagestr", (message) => {
     api = message.split("Your new API key is ")[1].trim();
   }
   else if (message.startsWith("From ") || message.startsWith("To ") || message.startsWith("[SkyBlock]") || message.startsWith("[✌]")) {
-    discordbot.guilds.cache
-      .get(process.env.DISCORD_SERVER_ID)
-      .channels.cache.get(process.env.DISCORD_CHANNEL_ID)
-      .send(message);
+    sendMessage(discordbot, message);
   }
   else if (message.includes("Limbo") || message.includes("/limbo")) {
     setTimeout(() => {
@@ -93,10 +87,7 @@ mcbot.on("messagestr", (message) => {
   }
   else if (message.includes("Your inventory is full")) {
     mcbot.end();
-    discordbot.guilds.cache
-      .get(process.env.DISCORD_SERVER_ID)
-      .channels.cache.get(process.env.DISCORD_CHANNEL_ID)
-      .send("<@" + process.env.DISCORD_USER_ID + ">, Bot closed due to full inventory");
+    sendMessage(discordbot, ("<@" + process.env.DISCORD_USER_ID + ">, Bot closed due to full inventory"));
     setTimeout(() => {
       process.exit();
     }, 3000);
@@ -119,11 +110,13 @@ function checkStatus(mcbot) {
   setInterval(() => {
     var scoreboarddata = (mcbot.scoreboard.sidebar.items);
     var result = (scoreboarddata.find(item => item.value === 6));
-    if (((JSON.stringify(result.displayName)).includes('"text":"Your Isla')) || ((JSON.stringify(result.displayName)).includes('"text":"✌'))) {
-      console.log('\x1b[32m%s\x1b[0m', "Detected already on island");
+    if ((JSON.stringify(mcbot.scoreboard.sidebar.items)).includes('text":"Your Isla')) {
+      console.log('\x1b[32m%s\x1b[0m', "Already on island");
     }
     else {
       mcbot.chat("/locraw");
+      sendMessage(discordbot, "Not on private island- relocating")
+      console.log('\x1b[32m%s\x1b[0m', "Not on private island- relocating");
     }
   }, 90000);
 }
@@ -161,6 +154,7 @@ function checkOnline(mcbot, discordbot) {
     } catch (e) {
       console.log(e);
     }
+    console.timeLog("timeSinceStart");
   }, 900000);
 }
 
@@ -200,6 +194,12 @@ function ensureLocation(mcbot, discordbot, message) {
   }
 };
 
+function sendMessage(discordbot, message) {
+  discordbot.guilds.cache
+    .get(process.env.DISCORD_SERVER_ID)
+    .channels.cache.get(process.env.DISCORD_CHANNEL_ID)
+    .send(message);
+}
 
 mcbot.on("windowOpen", (window) => {
   if (window.title.includes("Visit"))
@@ -210,18 +210,12 @@ mcbot.on("windowOpen", (window) => {
 
 mcbot.on("kicked", (reason) => {
   console.log(reason);
-  discordbot.guilds.cache
-    .get(process.env.DISCORD_SERVER_ID)
-    .channels.cache.get(process.env.DISCORD_CHANNEL_ID)
-    .send("<@" + process.env.DISCORD_USER_ID + ">, Kicked for reason: " + reason);
+  sendMessage( discordbot, ("<@" + process.env.DISCORD_USER_ID + ">, Kicked for reason: " + reason));
 });
 
 mcbot.on("error", (error) => {
   console.log(error);
-  discordbot.guilds.cache
-    .get(process.env.DISCORD_SERVER_ID)
-    .channels.cache.get(process.env.DISCORD_CHANNEL_ID)
-    .send(error);
+  sendMessage(discordbot, error);
 });
 discordbot.login(
   process.env.DISCORD_BOT_TOKEN
