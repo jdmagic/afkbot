@@ -11,7 +11,7 @@ const discordbot = new Client({
 const mineflayer = require("mineflayer");
 const mineflayerViewer = require("prismarine-viewer").mineflayer;
 require('dotenv-safe').config();
-console.time("timeSinceStart")
+console.time("timeElapsed")
 
 var api = "";
 var botid = "";
@@ -154,7 +154,7 @@ function checkOnline(mcbot, discordbot) {
     } catch (e) {
       console.log(e);
     }
-    console.timeLog("timeSinceStart");
+    console.timeLog("timeElapsed");
   }, 900000);
 }
 
