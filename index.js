@@ -101,7 +101,7 @@ discordbot.on("ready", () => {
 });
 
 discordbot.on("messageCreate", (message) => {
-  if (message.author.id === process.env.DISCORD_USER_ID && mcbot) {
+  if ((message.author.id === process.env.DISCORD_USER_ID) && (message.channel.id === process.env.DISCORD_CHANNEL_ID)) {
     mcbot.chat(message.content);
   }
 });
