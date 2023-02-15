@@ -1,6 +1,6 @@
 {
   "name": "afkbot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bot to log into Hypixel, travel to the player's private island, and go AFK",
   "main": "index.js",
   "scripts": {
