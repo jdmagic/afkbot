@@ -15,7 +15,6 @@ console.time("timeElapsed")
 
 var api = "";
 var botid = "";
-var visited = false;
 
 var mcbot = mineflayer.createBot({
   version: "1.8.9",
