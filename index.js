@@ -71,6 +71,13 @@ mcbot.on("messagestr", (message) => {
   if (message.includes("Your new API key is")) {
     api = message.split("Your new API key is ")[1].trim();
   }
+  else if (message.startsWith("You died and your piggy bank cracked!") || message.includes("coins and your piggy bank broke!")) {
+    mcbot.end();
+    sendMessage(discordbot, ("<@" + process.env.DISCORD_USER_ID + ">, Bot closed due to piggy bank break detected"));
+    setTimeout(() => {
+      process.exit();
+    }, 3000);
+  }
   else if (message.startsWith("From ") || message.startsWith("To ") || message.startsWith("[SkyBlock]") || message.startsWith("[✌]")) {
     sendMessage(discordbot, message);
   }
