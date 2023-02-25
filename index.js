@@ -65,7 +65,7 @@ mcbot.on("messagestr", (message) => {
   if (message.startsWith('{"server":"')) {
     ensureLocation(mcbot, discordbot, message)
   }
-  else if (!message.includes("✎ Mana") && !message.startsWith("Autopet equipped") && !message.includes("fell into the void.")) {
+  else if (!message.includes("✎ Mana") && !message.startsWith("Autopet equipped") && !message.includes("fell into the void.") && !message.includes("Teleport Pad to the")) {
     console.log(message);
   }
   if (message.includes("Your new API key is")) {
