@@ -117,8 +117,6 @@ discordbot.on("messageCreate", (message) => {
 
 function checkStatus(mcbot) {
   setInterval(() => {
-    var scoreboarddata = (mcbot.scoreboard.sidebar.items);
-    var result = (scoreboarddata.find(item => item.value === 6));
     if ((JSON.stringify(mcbot.scoreboard.sidebar.items)).includes('text":"Your Isla')) {
       console.log('\x1b[32m%s\x1b[0m', "Already on island");
     }
