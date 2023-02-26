@@ -65,7 +65,7 @@ mcbot.on("messagestr", (message) => {
   if (message.startsWith('{"server":"')) {
     ensureLocation(mcbot, discordbot, message)
   }
-  else if (!message.includes("✎ Mana") && !message.startsWith("Autopet equipped") && !message.includes("fell into the void.") && !message.includes("Teleport Pad to the")) {
+  else if (!message.includes("❈ Defense") && !message.includes("✎ Mana")  && !message.includes("⏣ Village") && !message.startsWith("Autopet equipped") && !message.includes("fell into the void.") && !message.includes("Teleport Pad to the")) {
     console.log(message);
   }
   if (message.includes("Your new API key is")) {
@@ -77,6 +77,9 @@ mcbot.on("messagestr", (message) => {
     setTimeout(() => {
       process.exit();
     }, 3000);
+  }
+  else if (message.startsWith('Finding player...')) {
+    visitPlayer();
   }
   else if (message.startsWith("From ") || message.startsWith("To ") || message.startsWith("[SkyBlock]") || message.startsWith("[✌]")) {
     sendMessage(discordbot, message);
@@ -207,12 +210,11 @@ function sendMessage(discordbot, message) {
     .send(message);
 }
 
-mcbot.on("windowOpen", (window) => {
-  if (window.title.includes("Visit"))
+function visitPlayer () {
     setTimeout(() => {
-      mcbot.clickWindow(11, 0, 0);
-    }, 3000);
-});
+      mcbot.simpleClick.leftMouse (11);
+    }, 5000);
+}
 
 mcbot.on("kicked", (reason) => {
   console.log(reason);
