@@ -10,7 +10,9 @@ const discordbot = new Client({
 });
 const mineflayer = require("mineflayer");
 const mineflayerViewer = require("prismarine-viewer").mineflayer;
-require('dotenv-safe').config();
+require('dotenv-safe').config({
+    allowEmptyValues: true,
+});
 console.time("timeElapsed")
 
 var api = "";
